@@ -1,19 +1,26 @@
 public class CustomLinkedList {
 
+    static Node head, tail;
+    static int size;
+
 
     // initially the Node's head and tail are null
-    static Node head = null, tail = null;
-    static int size = 0;
+//    static Node head = null, tail = null;
+//    static int size = 0;
 
+    //default constructor without parameters
     CustomLinkedList(){
-        head = new Node();
-        head = null;
+        head = new Node(null);
+//        head = null;
+        tail = head;
     }
 
 
+    //default constructor with parameters
     CustomLinkedList(Object data){
         // this is an empty list, so the reference to the head node is set to a new node with data
         head = new Node(data);
+        tail = head;
         size = 1;
     }
 
@@ -22,7 +29,7 @@ public class CustomLinkedList {
 
 
     public static boolean isEmpty(){
-        if (head == null) //if the tail is null then the stack has to be empty
+        if (size <= 0)//if the tail is null then the stack has to be empty
             return true;
         return false;
     }
@@ -36,10 +43,15 @@ public class CustomLinkedList {
             size = 0;
             head = newNode;
             tail = newNode;
-            //the previous of the head will be null, as will the next for the tail
-//            head.previous = null;
             tail.next = null;
-        } else{
+        }
+        else if (size == 1){
+            tail.next = newNode;
+            tail = newNode;
+            head.next = tail;
+            tail.next = null;
+        }
+        else{
             //add the new node to the end of the list
             tail.next = newNode;
 //            newNode.previous = tail;
@@ -141,9 +153,10 @@ public class CustomLinkedList {
         System.out.println("Is my list empty? " + myList.isEmpty());
 
         System.out.println("Size of list: " + myList.size());
+        myList.printList();
         myList.removeNode();
 
-        myList.printList();
+
         System.out.println(myList.peekFirst());
         System.out.println(myList.peekLast());
 
@@ -153,6 +166,7 @@ public class CustomLinkedList {
         myList.addNode(42.000001);
         myList.addNode(false);
         myList.printList();
+        System.out.println("Is my list empty? " + myList.isEmpty());
 
         myList.search(32);
 
