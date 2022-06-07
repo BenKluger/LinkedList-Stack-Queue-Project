@@ -68,14 +68,15 @@ public class CustomQueue{
             System.out.println("You cannot remove a node in an empty queue.");
             return null;
         }
-        size--;
 
         Node returnThis = head;
         if(size == 1){
+            size--;
             head = null;
             tail = head;
             return returnThis.data;
         }
+        size--;
         head = head.next; //shift it over to the head
         return returnThis.data;
     }

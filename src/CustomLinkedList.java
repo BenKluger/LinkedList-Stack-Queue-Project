@@ -63,10 +63,33 @@ public class CustomLinkedList {
             System.out.println("This list is empty.");
             return null;
         }
+        if (size == 1) {
+            System.out.println("The size is 1");
+            return head.data;
+        }
         return tail.data;
     }
 
-    public static Object pop(){
+    public static Object pop(){ //this removes and returns the first element
+        if (isEmpty()) {
+            System.out.println("You cannot remove a node in an empty queue.");
+            return null;
+        }
+
+
+        Node returnThis = head;
+        if(size == 1){
+            head = null;
+            tail = head;
+            size--;
+            return returnThis.data;
+        }
+        size--;
+        head = head.next; //shift it over to the head
+        return returnThis.data;
+    }
+
+    public static Object removeLast(){ //this removes and returns the last element
         if (isEmpty()){
             System.out.println("You cannot remove a node in an empty list.");
             return null;
@@ -177,7 +200,9 @@ public class CustomLinkedList {
 
         while(!myList.isEmpty()) {
             System.out.println("Removing a node...");
-            myList.pop();
+            System.out.println(myList.pop());
+            System.out.println("Size of the list is: " + myList.size());
+            myList.printList();
             System.out.println(myList.peekLast());
         }
 
