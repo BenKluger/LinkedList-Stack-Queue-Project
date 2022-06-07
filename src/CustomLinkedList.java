@@ -3,15 +3,9 @@ public class CustomLinkedList {
     static Node head, tail;
     static int size;
 
-
-    // initially the Node's head and tail are null
-//    static Node head = null, tail = null;
-//    static int size = 0;
-
     //default constructor without parameters
     CustomLinkedList(){
         head = new Node(null);
-//        head = null;
         tail = head;
     }
 
@@ -24,17 +18,13 @@ public class CustomLinkedList {
         size = 1;
     }
 
-
-
-
-
-    public static boolean isEmpty(){
-        if (size <= 0)//if the tail is null then the stack has to be empty
+    public static boolean isEmpty(){ // This checks if the linked list is empty
+        if (size <= 0)
             return true;
         return false;
     }
 
-    public static void addNode(Object data){
+    public static void push(Object data){
         //first create a new node
         Node newNode = new Node(data);
 
@@ -54,13 +44,10 @@ public class CustomLinkedList {
         else{
             //add the new node to the end of the list
             tail.next = newNode;
-//            newNode.previous = tail;
             tail = newNode;
             tail.next = null;
-
         }
         size++;
-
     }
 
     public static Object peekFirst(){
@@ -79,24 +66,25 @@ public class CustomLinkedList {
         return tail.data;
     }
 
-    public static void removeNode(){
+    public static Object pop(){
         if (isEmpty()){
             System.out.println("You cannot remove a node in an empty list.");
-            return;
+            return null;
         }
         size--;
+        Node returnThis = tail;
         if(head == tail){
             head = null;
             tail = head;
-            return;
+            return returnThis.data;
         }
-//        tail = tail.previous; //make the second to last the last element
         Node p = head;
         while(p.next != tail){ //iterate through the list until you find the second to last node
             p = p.next;
         }
         tail = p; //now set tail to the second to last node
         tail.next = null; //make the node after the tail be null
+        return returnThis.data;
     }
 
     public static int search (Object element){
@@ -124,8 +112,8 @@ public class CustomLinkedList {
     }
 
 
-    //a way to print all of the nodes
-    public void printList(){
+
+    public void printList(){ // this prints the entire linked list
 
         Node current = head;
 
@@ -141,32 +129,42 @@ public class CustomLinkedList {
         System.out.println();
     }
 
+    public static void clear(){
+        head = null;
+        tail = head;
+        size = 0;
+    }
+
     public static int size(){
         return size;
     }
 
 
     public static void main(String[] args) {
-//        CustomLinkedList myList = new CustomLinkedList();
-        CustomLinkedList myList = new CustomLinkedList(5);
+        CustomLinkedList myList = new CustomLinkedList(); // Empty constructor
+//        CustomLinkedList myList = new CustomLinkedList(5); //constructor with data
 
         System.out.println("Is my list empty? " + myList.isEmpty());
 
         System.out.println("Size of list: " + myList.size());
         myList.printList();
-        myList.removeNode();
+        myList.pop();
 
 
         System.out.println(myList.peekFirst());
         System.out.println(myList.peekLast());
 
-        myList.addNode("Hello");
-        myList.addNode('F');
-        myList.addNode(32);
-        myList.addNode(42.000001);
-        myList.addNode(false);
+        myList.push("Hello");
+        System.out.println("Deleting one off the end: " + myList.pop());
+        myList.printList();
+        myList.push('F');
+        myList.push(32);
+        myList.push(42.000001);
+        myList.push(false);
         myList.printList();
         System.out.println("Is my list empty? " + myList.isEmpty());
+        System.out.println("Deleting one off the end: " + myList.pop());
+        myList.printList();
 
         myList.search(32);
 
@@ -175,12 +173,11 @@ public class CustomLinkedList {
         System.out.println(myList.peekLast());
 
         System.out.println("Size of list: " + myList.size());
-        System.out.println("Print out list: ");
         myList.printList();
 
         while(!myList.isEmpty()) {
             System.out.println("Removing a node...");
-            myList.removeNode();
+            myList.pop();
             System.out.println(myList.peekLast());
         }
 
@@ -188,6 +185,22 @@ public class CustomLinkedList {
         System.out.println("Print out list: ");
         myList.printList();
         myList.search(32);
+
+
+        ////Testing clear
+        myList.push("Hello");
+        myList.push('F');
+        myList.push(32);
+        myList.push(42.000001);
+        myList.push(false);
+        myList.printList();
+
+        myList.clear();
+        myList.printList();
+
+        myList.push(42.000001);
+        myList.push(false);
+        myList.printList();
     }
 
 }
